@@ -1,0 +1,48 @@
+
+18: use lib '../../../';
+    ^                   
+found use where operator expected
+
+Missing ';' above?
+
+59: $x = Collection::Line->new();
+    ^                            
+found Scalar where operator expected
+
+Missing ';' above?
+
+62: $x = Collection::Line->new(maxbuff => 9);
+    ^                                        
+found Scalar where operator expected
+
+Missing ';' above?
+
+66: $x = Collection::Line->new();
+    ^                            
+found Scalar where operator expected
+
+Missing ';' above?
+
+75: $x = Collection::Line->new();
+    ^                            
+found Scalar where operator expected
+
+Missing ';' above?
+
+81: $x->enqueue_packet_fragment(PCHAR_ESC . ('A'x8) . PCHAR_END);
+    ^                                                            
+found Scalar where operator expected
+
+Missing ';' above?
+
+Missing ';' above?
+
+Missing ';' above?
+
+Missing ';' above?
+
+Missing ';' above?
+
+Missing ';' above?
+
+Missing ';' above?

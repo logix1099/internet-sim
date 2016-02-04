@@ -1,0 +1,3 @@
+Only handler n can update a field in packet n
+Any handler can update a field in a generic packet
+(with the exception of the msg field)

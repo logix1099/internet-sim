@@ -1,0 +1,19 @@
+Reading database from /home/peter/inet16-Peter/Collection/Verification/Line/cover_db
+
+
+----------------------------------- ------ ------ ------ ------ ------ ------
+File                                  stmt   bran   cond    sub   time  total
+----------------------------------- ------ ------ ------ ------ ------ ------
+.../inet16-Peter/Collection/Line.pm   89.2   81.2    n/a   92.3    0.0   88.3
+...er/inet16-Peter/Exc/Exception.pm   77.7    n/a    n/a   80.0    0.0   78.2
+tb.pl                                 41.4   16.4    n/a   74.2   99.9   38.2
+Total                                 47.1   21.4    n/a   77.3  100.0   44.1
+----------------------------------- ------ ------ ------ ------ ------ ------
+
+
+Run:          tb.pl
+Perl version: 5.18.2
+OS:           linux
+Start:        Tue Feb  2 06:41:31 2016
+Finish:       Tue Feb  2 06:41:37 2016
+

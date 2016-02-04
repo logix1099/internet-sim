@@ -1,0 +1,255 @@
+		      CSCI 460 Virtual internet  
+                      +++++++++++++++++++++++++
+                    (System Requirements Overview)
+
+Last Updated: Friday Jan 15 2016
+
+Goal
+====
+
+  - Build a virtual packet-switching internet based on TCP/IP protocols
+  - Protocols must be "approximately" RFC compliant
+  - Favour ease of development over virtual network speed
+  - Use serial lines and the real Internet to transport
+    virtual packets
+  - Virtual packet processing should be event driven where multiple
+    virtual packets are processed by the stack at any give moment (as
+    opposed to the model where a single virtual packet moves  from link
+    layer to application layer (and visa versa) before the next virtual
+    packet can be processed).
+
+
+Preamble
+========
+
+inet is a virtual packet-switching internet based on TCP/IP protocols.
+inet consists of
+   - virtual network stacks called vnets
+   - virtual hubs called vhubs
+   - virtual point-to-point connections called vp2p connections 
+   - virtual LANs called VLANs
+   - virtual WANs called VWANs.
+  
+A VLAN is constructed by interconnecting  two or more vnets using
+a vhub.  VLANs can be connected in a hierarchy using vhubs or can be
+connected as a VWAN using vp2p connections.  inet is the collective name
+given to multiple interacting vnets configured into VLANs and VWANs.
+
+
+Ports and Addresses
+===================
+
+IP address is a dot-decimal string containing 4 8-bit decimal numbers
+   e.g.,  "192.168.18.21" (note, numbers may not contain leading 0s).
+Host id. is a string  containing 1 8-bit decimal number e.g., "21".
+Network id. is a dot-decimal string containing 3 8-bit decimal numbers
+   e.g.,  "192.168.18".
+IP broadcast address is "255.255.255.255".
+Port address is an  integer string e.g., "23".
+Mac address is an  integer string e.g., "7071".
+Mac broadcast address is "0".
+
+Note that Mac broadcasts are local to a VLAN and IP broadcasts
+are never forwarded  by a router.
+
+Packet Fields
+=============
+
+Valid values for a ethernet proto field are {"IP", "ARP"}.
+Valid values for an ip  proto field are {"TCP", "UDP", "ICMP"}.
+Valid values for an arp  opcode field are {"REQUEST", "REPLY"}.
+Valid values for icmp type field  are {"ECHO", "ECHO_REPLY", "INFO_REPLY",
+"TIME_EXCEEDED", "HOST_UNREACHABLE"}
+Valid values for generic direction field  are {"UP", "DOWN"}
+
+Network Assignments
+===================
+
+VLAN				vhub Port Numbers	
+----				-----------------
+"192.168.0.0/24"		x070-x073
+"192.168.1.0/24"		x074-x077
+"192.168.2.0/24"		x078-x081
+"192.168.3.0/24"		x082-x085
+"192.168.4.0/24"		x086-x089
+"192.168.5.0/24"		x090-x093
+"192.168.6.0/24"		x094-x097
+"192.168.7.0/24"		x098-x101
+"192.168.8.0/24"		x102-x105
+"192.168.9.0/24"		x106-x109
+"192.168.10.0/24"		x110-x113
+"192.168.11.0/24"		x114-x117
+"192.168.12.0/24"		x118-x121
+"192.168.13.0/24"		x122-x125
+"192.168.14.0/24"		x126-x129
+"192.168.15.0/24"		x130-x133
+"192.168.16.0/24"		x134-x137
+"192.168.17.0/24"		x138-x141
+
+For Section 1 x=5.
+For Section 2 x=6.
+
+Each VLAN has 4 vhub ports for a maximum of 4 hosts per VLAN.
+
+Tool/hubServer.pl implements multiple vhubs.
+
+vp2p Connections				vp2p Port Numbers
+----------------				-----------------
+"10.0.0.100" <--> "10.0.0.200"			y000 <--> y001
+"10.0.1.100" <--> "10.0.1.200"			y002 <--> y003
+"10.0.2.100" <--> "10.0.2.200"			y004 <--> y005
+"10.0.3.100" <--> "10.0.3.200"			y006 <--> y007
+"10.0.4.100" <--> "10.0.4.200"			y008 <--> y009
+"10.0.5.100" <--> "10.0.5.200"			y010 <--> y011
+"10.0.6.100" <--> "10.0.6.200"			y012 <--> y013
+"10.0.7.100" <--> "10.0.7.200"			y014 <--> y015
+"10.0.8.100" <--> "10.0.8.200"			y016 <--> y017
+"10.0.9.100" <--> "10.0.9.200"			y018 <--> y019
+"10.0.10.100" <--> "10.0.10.200"		y020 <--> y021
+"10.0.11.100" <--> "10.0.11.200"		y022 <--> y023
+"10.0.12.100" <--> "10.0.12.200"		y024 <--> y025
+"10.0.13.100" <--> "10.0.13.200"		y026 <--> y027
+"10.0.14.100" <--> "10.0.14.200"		y028 <--> y029
+"10.0.15.100" <--> "10.0.15.200"		y030 <--> y031
+"10.0.16.100" <--> "10.0.16.200"		y032 <--> y033
+"10.0.17.100" <--> "10.0.17.200"		y034 <--> y035
+"10.0.18.100" <--> "10.0.18.200"		y036 <--> y037
+"10.0.19.100" <--> "10.0.19.200"		y038 <--> y039
+"10.0.20.100" <--> "10.0.20.200"		y040 <--> y041
+"10.0.21.100" <--> "10.0.21.200"		y042 <--> y043
+"10.0.22.100" <--> "10.0.22.200"		y044 <--> y045
+"10.0.23.100" <--> "10.0.23.200"		y046 <--> y047
+"10.0.24.100" <--> "10.0.24.200"		y048 <--> y049
+"10.0.25.100" <--> "10.0.25.200"		y050 <--> y051
+"10.0.26.100" <--> "10.0.26.200"		y052 <--> y053
+"10.0.27.100" <--> "10.0.27.200"		y054 <--> y055
+"10.0.28.100" <--> "10.0.28.200"		y056 <--> y057
+"10.0.29.100" <--> "10.0.29.200"		y058 <--> y059
+"10.0.30.100" <--> "10.0.30.200"		y060 <--> y061
+"10.0.31.100" <--> "10.0.31.200"		y062 <--> y063
+
+For Section 1 y=8.
+For Section 2 x=9.
+
+Each vp2p connection  has 2 vp2p ports.
+
+Tool/p2pServer.pl implements multiple vp2p connections.
+
+Static MAC Assignments
+======================
+
+IP Address		MAC
+------------		---
+192.168.a.b		(a * 100) + b
+
+ICMP SERVICES
+=============
+Name(port)		Payload In		Payload Out
+----			----------		-----------
+pingd(30)		(fload) time 		(float) time
+
+UDP Services
+============
+
+Name(port)		Payload In		Payload Out
+----			----------		-----------
+incd(40)		(int) val		(int) incremented val
+
+guessd(50)		(int) val		(string) guess result
+
+Behaviour incd
+--------------
+if a client on "192.168.5.3" sends val==23 to incd at "192.168.5.51":"40",
+then incd should return val==24 to the client.
+
+Behaviour guessd
+----------------
+guessd manages a number guessing game.  Clients must register with the
+server to play the game.  A client's first interaction with guessd is
+viewed as registration and subsequently, the client is prompted to guess
+a number between 1 and 100.
+
+Any unsolicited guesses are dropped (with the exception of the
+registration guess). 
+
+The result of a guess is sent to all registered clients with an indication
+of guess "goodness".
+
+A val==0 guess indicates a client wants to leave the game.
+
+New games are started with no registered clients.
+
+Tools
+=====
+hubSniffer.pl captures packets from a vhub port. It is
+a simple host and may be used on a VLAN at any time.
+
+hubServer.pl implements multiple vhubs.
+
+p2pServer.pl implements  multiple vp2p connections.
+
+vnet.pl implements one or more  vnet tcp/ip stacks. 
+
+Directory Structure
+===================
+
+vnet in implements in OO Perl. Classes are implemented using modules
+and related modules are stored in a directory. The directory structure
+is exemplified using Demo as follows:
+
+Demo                           # Class Directory
+   Lifo.pm                     # Class Module Implementation for Lifo
+   SSet.pm                     # Class Module Implementation for SSet
+   Verification                # Verification Directory
+      Lifo                     # Verification Directory for Lifo
+         Lifo.mis              # Module Interface Specification for Lifo
+         test_plan             # Test Plan for Lifo
+         lifo_tst.pl           # Interactive Tester for Lifo
+         tb.cew                # Test Bench for Lifo
+         Makefile
+      SSet                     # Verification Directory for SSet
+         sset_tst.pl           # Verification Files for SSet
+
+Packing and Framing
+===================
+
+Module		Packing/Collection Framing Tokens
+------		---------------------------------
+Ethernet.pm 	'_I_'
+Udp.pm		'_J_'
+Ip.pm		'_K_'
+Arp.pm		'_L_'
+Icmp.pm		'_M_'
+Generic.pm	'_N_'
+Line.pm		ESC '_G_' END '_H_'
+
+Note 1, at a future date, user-data may be encoded as hex. strings to
+ensure that user-data is not incorrectly interpreted as framing tokens.
+
+Note 2, a heartbeat packet is the string 'ESCheartbeatEND'. Heartbeat packets
+are consumed by the Line module (see Line MIS).
+
+
+vnet Boot and Menu
+==================
+
+perl vnet.pl executes the boot menu/options and then executes 
+the system shell as exemplified below:
+
+> help
+COMMAND			BEHAVIOUR
+help			display help message 
+system			display system information
+ping ip			ping
+guess ip:val		play the guess game
+increment ip:val	request increment service
+quit			shutdown
+> 
+
+Heartbeat
+=========
+Connection services provided by the hubServer or p2pServer are based
+on TCP.  These connections are removed by the Unix/Linux OS if the
+associated channel is idle for a prescribed amount of time. To keep
+a channel open, a heartbeat packet is transmitted along
+the channel every 20s.  The heartbeat is discarded once received.

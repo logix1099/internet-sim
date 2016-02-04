@@ -1,0 +1,93 @@
+Consider the situation where GRUB.pm is configured to boot
+Peter H and and Peter R using virtual networks 192.168.6 and 10.0.6 and
+10.0.8. The Hub server and P2p server are executing on otter.
+
+You have been assigned a cub for your Lab work. You must modify your copy
+of GRUB.pm to reflect your cub assignment.  What follows is a partial
+listing of GRUB.pm where a # symbol indicates an area you will most likely
+have to change to participate in system testing with other students.
+
+Note that it is possible to do isolated testing by simply running the
+Hub server and the P2p server locally. For example, replace otter with
+cub6 below to configure the system to run locally on cub6.
+
+Peter
+
+use constant HUB_HOST => 'otter.csci.viu.ca';
+                         ###################
+use constant P2P_HOST => 'otter.csci.viu.ca';
+                         ###################
+
+   .
+   .
+   .
+
+
+      print ("\n\tBoot Menu\n\n");
+      print ("Boot Peter H 0\n");
+                   #####
+      print ("Boot Peter R 1\n");
+                   #####
+
+      print ("\nEnter Selection ");
+      $sel = <>;
+      chop($sel);
+   }
+   
+   if ($sel == 0) {
+
+      # little checking performed :(
+
+      System::HOST->set_name("Peter H");
+                              ####
+      print(System::HOST->get_name(), "\n");
+      my $boot_time = AnyEvent->time();
+      print ("Boot Time: ", $boot_time, "\n");
+      System::HOST->set_boot_time($boot_time);
+      #                           Type        Ip             Mac
+      Table::NIC->set('eth0', 'ethernet', '192.168.6.1', '601');
+                                                   #      #
+      socket_configure('eth0', HUB_HOST, 5094);
+                                         ####
+      Table::ARP->set_mac('192.168.6.2', '602');
+                                   #      ###
+      Table::ROUTE->set_route('192.168.6.1', '0.0.0.0', 'lo');
+                                       #
+      Table::ROUTE->set_route('192.168.6', '0.0.0.0', 'eth0');
+                                       #
+      Table::ROUTE->set_route('0.0.0.0', '192.168.6.2', 'eth0');
+                                                  #
+   }
+
+   if ($sel == 1) {
+
+      # little checking performed :(
+
+      System::HOST->set_name("Peter R");
+                              #####
+      print(System::HOST->get_name(), "\n");
+      my $boot_time = AnyEvent->time();
+      print ("Boot Time: ", $boot_time, "\n");
+      System::HOST->set_boot_time($boot_time);
+
+      #                           Type        Ip             Mac
+      Table::NIC->set('eth0', 'ethernet', '192.168.6.2', '602');
+                                                   #      ###
+      Table::NIC->set('p2p0', 'point2point', '10.0.6.100', '0');
+                                                   #
+      socket_configure('eth0', HUB_HOST, 5095);
+                                         ####
+      socket_configure('p2p0', P2P_HOST, 8012);
+                                         ####
+      Table::ARP->set_mac('192.168.6.1', '601');
+                                   #      ###
+      Table::ROUTE->set_route('192.168.6.2', '0.0.0.0', 'lo');
+                                       #
+      Table::ROUTE->set_route('10.0.6.100', '0.0.0.0', 'lo');
+                                    #
+      Table::ROUTE->set_route('192.168.6', '0.0.0.0', 'eth0');
+                                       #
+      Table::ROUTE->set_route('0.0.0.0', '10.0.6.200', 'p2p0');
+                                               #
+
+   }

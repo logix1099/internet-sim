@@ -1,0 +1,38 @@
+
+18: use lib '../../../';
+    ^                   
+found use where operator expected
+
+Missing ';' above?
+
+43: cew_Ncase(, $y->get_siz(), 3)
+    ^                            
+found bareword where operator expected
+
+Missing ';' above?
+
+45: cew_Ncase(, $x->dequeue(), 'Hello')
+    ^                                  
+found bareword where operator expected
+
+Missing ';' above?
+
+46: cew_Ncase(, $y->dequeue(), 'foo')
+    ^                                
+found bareword where operator expected
+
+Missing ';' above?
+
+48: cew_Ncase(, $x->get_siz(), 1)
+    ^                            
+found bareword where operator expected
+
+Missing ';' above?
+
+49: cew_Ncase(, $y->get_siz(), 2)
+    ^                            
+found bareword where operator expected
+
+Missing ';' above?
+
+Missing ';' above?

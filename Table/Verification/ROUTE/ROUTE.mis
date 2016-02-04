@@ -1,0 +1,44 @@
+ROUTE Interface Specification
+
+Assumptions/Notes
+-----------------
+This module maintains a table of records where
+each record is a triple <net, gw, iface>.
+
+Exceptions
+----------
+               Table::ROUTE->set_route    
+               Table::ROUTE->get_route    
+
+Class Method set_route
+----------------------
+Inputs: scalar network, scalar gateway, scalar interface
+Exceptions: if network, gateway or interface are undefined then
+               throw Table::ROUTE->set_route
+Behaviour: if there exists a record i where net == network then
+               set i's gw to gateway
+               set i's iface to interface
+            else 
+               add <interface, gateway, interface> to the table
+Outputs: none
+
+Class Method get_route
+----------------------
+Inputs: scalar ip
+Exceptions: if ip is undefined then
+               throw Table::ROUTE->get_route
+Behaviour/Outputs:  
+            Consider the scalar x and a set of scalars Y.  Let y be an
+            element of Y.  y = best match (x, Y) if
+            y is the largest non-zero left sub string of x.
+
+            if there exists a record i = <m, gw, iface> where 
+            m = best match(ip, all net values in the table) then 
+               return (i's gateway, i's interface)
+            else if there exists a record i = <net, gw, iface> 
+            where net == "0.0.0.0" then
+               return (i's gateway, i's interface)
+            else 
+               return (undef, undef)
+
+See ROUTE_tst.pl for examles of method invocation.
