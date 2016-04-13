@@ -20,7 +20,7 @@ my $src_ip = ' ';
 my $dest_ip = ' ';
 my $proto = ' ';
 my $err = ' ';
-my $ttl = ' ';
+my $ttl = '32';
 my $msg = ' ';
 
 my $password = "Peter-IP";
@@ -126,11 +126,11 @@ sub get_ttl {
 sub set_ttl {
    my $self = shift @_;
    my $tl = shift @_;
- 
+
    if (defined($tl)) {
       $self->{ttl} = $tl;
    }
-
+   
    return;
 }
 

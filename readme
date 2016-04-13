@@ -1,0 +1,23 @@
+Kevin Skinner progress report
+
+
+parts implemented
+
+ping with arp
+arp table clear
+ping across the WAN
+increment
+
+
+parts implemented and not working
+
+
+ping time exceeded(not fully working)
+increment time exceeded(not fully working)
+time exceeded appears to return when given certain ip address
+and fails given other ip address. 
+
+parts not implemented
+
+host unreachable with both ping and increment
+

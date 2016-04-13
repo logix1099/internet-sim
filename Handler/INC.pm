@@ -1,4 +1,4 @@
-package Handler::PING;
+package Handler::INC;
 #================================================================--
 # File Name    : Handler/PING.pm
 #
@@ -16,8 +16,9 @@ use warnings;
 
 use lib '../';
 use AnyEvent;
+use Packet::Udp;
 use Packet::Generic;
-use Handler::ICMP;
+use Handler::UDP;
 use Table::QUEUE;
 use Handler::STDOUT;
 use Handler::STDIN;
@@ -28,20 +29,20 @@ my $process_ref = sub {
 
    my $trace = System::HOST->get_trace();
    if  ($trace) {
-      print ("In PING\n");
+      print ("In INC\n");
    }
 
    my $generic_packet = Packet::Generic->new();
+   my $udp_packet = Packet::Udp->new();
 
-   if (Table::QUEUE->get_siz('ping')) {
-      my $raw = Table::QUEUE->dequeue('ping');
+   if (Table::QUEUE->get_siz('inc')) {
+      my $raw = Table::QUEUE->dequeue('inc');
       $generic_packet->decode($raw);
       my $ph = $generic_packet->get_previous_handler();
-      $generic_packet->set_previous_handler("PING");
-
+      $generic_packet->set_previous_handler("INC");
       if ($ph eq "STDIN") {
-      	my $ttl = $generic_packet->get_msg();
-            $generic_packet->set_msg(join(':',@{["ECHO", AnyEvent->time(), $ttl]}));
+      	my $inc_num = $generic_packet->get_msg();
+            $generic_packet->set_msg($inc_num);
          my $i;
          my $g;
          ($i, $g) = Table::ROUTE->get_route($generic_packet->get_dest_ip());
@@ -50,37 +51,28 @@ my $process_ref = sub {
          } else {
             $generic_packet->set_src_ip(Table::NIC->get_ip($i));
          }
+         
 
-         Table::QUEUE->enqueue('icmp', $generic_packet->encode());
-         Table::QUEUE->enqueue('task', Handler::ICMP->get_process_ref());
+         Table::QUEUE->enqueue('udp', $generic_packet->encode());
+         Table::QUEUE->enqueue('task', Handler::UDP->get_process_ref());
 
       } else {
-         # assume $ph eq "ICMP" 
-         (my $ty, my $ts) = split(':', $generic_packet->get_msg());
-        # $generic_packet->dump();
-         #my $tme = AnyEvent->time() - $ts;
-         if ($ty eq "ECHO_REPLY")
-         {
-         	my $tme = AnyEvent->time() - $ts;
-         	$generic_packet->set_msg("Ping Reply " . $ty . " " . $tme . "(s) \n");
-         }
-         elsif ($ty eq "TIME_EXCEEDED" ){
-         	$generic_packet->set_msg($ty . " ". "\n");
-         }
-         elsif ($ty eq "HOST_UNREACHABLE" ){
-         	$generic_packet->set_msg($ty . " ". "\n");
-         }
+         # assume $ph eq "UDP" 
+         $udp_packet->decode($generic_packet->get_msg());
+         (my $inc_num) = $udp_packet->get_msg();         
+         $generic_packet->set_msg($inc_num."\n");
+
          Table::QUEUE->enqueue('stdout', $generic_packet->encode());
          Table::QUEUE->enqueue('task', Handler::STDOUT->get_process_ref());
          $generic_packet->set_msg(' '); # tidy up shell prompt
          Table::QUEUE->enqueue('stdin', $generic_packet->encode());
          Table::QUEUE->enqueue('task', Handler::STDIN->get_process_ref());
-         #$generic_packet->dump();
+
       }
    }
 
    if  ($trace) {
-      print ("Out PING\n");
+      print ("Out INC\n");
    }
 
    return;

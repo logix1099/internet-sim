@@ -31,6 +31,7 @@ use Event::STDIN;
 use Event::NIC;
 use Event::BOOT;
 use Event::IDLE;
+use Event::TIMER;
 use Handler::STDOUT;
 use Exc::Exception;
 use Exc::TryCatch;
@@ -42,6 +43,7 @@ my $stdin_event;
 my $boot_event;
 my @nic_event;
 my $idle_event;
+my $timer_event;
 my $generic_packet=Packet::Generic->new();
 my $nexttask;
 
@@ -82,7 +84,7 @@ my $vnet = Exc::TryCatch->new(
          }
 
          Event::IDLE->start(\$idle_event);
-
+			Event::TIMER->start(\$timer_event);
          $z_event->recv;
 
       #end implicit while (1) event loop ++++++++

@@ -103,8 +103,8 @@ sub boot {
    while (!($sel =~ m/^[0-1]/) || (length($sel) != 1))  {
 
       print ("\n\tBoot Menu\n\n");
-      print ("Boot Peter H 0\n");
-      print ("Boot Peter R 1\n");
+      print ("Boot kevin H 0\n");
+      print ("Boot kevin R 1\n");
 
       print ("\nEnter Selection ");
       $sel = <>;
@@ -115,44 +115,43 @@ sub boot {
 
       # little checking performed :(
 
-      System::HOST->set_name("Peter H");
+      System::HOST->set_name("kevin H");
       print(System::HOST->get_name(), "\n");
       my $boot_time = AnyEvent->time();
       print ("Boot Time: ", $boot_time, "\n");
       System::HOST->set_boot_time($boot_time);
       #                           Type        Ip             Mac
-      Table::NIC->set('eth0', 'ethernet', '192.168.6.1', '601');
-      socket_configure('eth0', HUB_HOST, 5094);
-      Table::ARP->set_mac('192.168.6.2', '602');
-      Table::ROUTE->set_route('192.168.6.1', '0.0.0.0', 'lo');
-      Table::ROUTE->set_route('192.168.6', '0.0.0.0', 'eth0');
-      Table::ROUTE->set_route('0.0.0.0', '192.168.6.2', 'eth0');
+      Table::NIC->set('eth0', 'ethernet', '192.168.2.1', '201');
+      socket_configure('eth0', HUB_HOST, 6078);
+     #Table::ARP->set_mac('192.168.2.2', '202');
+      Table::ROUTE->set_route('192.168.2.1', '0.0.0.0', 'lo');
+      Table::ROUTE->set_route('192.168.2', '0.0.0.0', 'eth0');
+      Table::ROUTE->set_route('0.0.0.0', '192.168.2.2', 'eth0');
    }
 
    if ($sel == 1) {
 
       # little checking performed :(
 
-      System::HOST->set_name("Peter R");
+      System::HOST->set_name("kevin R");
       print(System::HOST->get_name(), "\n");
       my $boot_time = AnyEvent->time();
       print ("Boot Time: ", $boot_time, "\n");
       System::HOST->set_boot_time($boot_time);
 
       #                           Type        Ip             Mac
-      Table::NIC->set('eth0', 'ethernet', '192.168.6.2', '602');
-      Table::NIC->set('p2p0', 'point2point', '10.0.6.100', '0');
-      Table::NIC->set('p2p1', 'point2point', '10.0.8.200', '0');
-      socket_configure('eth0', HUB_HOST, 5095);
-      socket_configure('p2p0', P2P_HOST, 8012);
-      socket_configure('p2p1', P2P_HOST, 8017);
-      Table::ARP->set_mac('192.168.6.1', '601');
-      Table::ROUTE->set_route('192.168.6.2', '0.0.0.0', 'lo');
-      Table::ROUTE->set_route('10.0.6.100', '0.0.0.0', 'lo');
-      Table::ROUTE->set_route('10.0.8.200', '0.0.0.0', 'lo');
-      Table::ROUTE->set_route('192.168.6', '0.0.0.0', 'eth0');
-      Table::ROUTE->set_route('0.0.0.0', '10.0.6.200', 'p2p0');
-
+      Table::NIC->set('eth0', 'ethernet', '192.168.2.2', '202');
+      Table::NIC->set('p2p0', 'point2point', '10.0.2.100', '0');
+      Table::NIC->set('p2p1', 'point2point', '10.0.1.200', '0');
+      socket_configure('eth0', HUB_HOST, 6079);
+      socket_configure('p2p0', P2P_HOST, 9004);
+      socket_configure('p2p1', P2P_HOST, 9003);
+     #Table::ARP->set_mac('192.168.2.1', '201');
+      Table::ROUTE->set_route('192.168.2.2', '0.0.0.0', 'lo');
+      Table::ROUTE->set_route('10.0.2.100', '0.0.0.0', 'lo');
+      Table::ROUTE->set_route('10.0.1.200', '0.0.0.0', 'lo');
+      Table::ROUTE->set_route('192.168.2', '0.0.0.0', 'eth0');
+      Table::ROUTE->set_route('0.0.0.0', '10.0.2.200', 'p2p0');
    }
 
    $generic_packet->set_msg(System::HOST->get_name() . "> ");

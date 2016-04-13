@@ -23,7 +23,7 @@ use Exc::TryCatch;
 my $portsOpen=0;
 my $maxPackSize=500;
 my $maxPorts=72;
-my $startPort=5070; 
+my $startPort=6070; 
 my @socket_port;
 my @interface;
 my @stdin_fifo;

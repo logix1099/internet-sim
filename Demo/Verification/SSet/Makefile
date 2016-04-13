@@ -12,7 +12,7 @@
 
 # directory where scripts are located and temp file
 SD=../../../Cew
-CUT=../../TryCatch.pm
+CUT=../../SSet.pm
 
 # code beautifier 
 INDENT=perltidy -i=3 

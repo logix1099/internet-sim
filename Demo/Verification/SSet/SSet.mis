@@ -1,0 +1,46 @@
+SSet (list) Interface Specification
+
+Exceptions
+----------
+               full    
+               empty   
+
+Class Method new
+----------------
+Inputs: optional (scalar) list size
+Exceptions: none
+Behaviour: create a list instance with state
+               maxsize # instance scalar variable: max size of list (default 5)
+               list   # instance array variable 
+Outputs: returns a reference to a list instance
+
+Instance Method size
+---------------------
+Inputs: none
+Exceptions: none
+Behaviour/Outputs returns the list size
+
+Instance Method add
+--------------------
+Inputs: scalar x
+Exceptions: if list size == list max size then throw full
+Behaviour: adds x on to list
+Outputs: none
+
+Instance Method delete
+-------------------
+Inputs: none
+Exceptions: if list size == 0 then throw empty
+Behaviour: delete the list
+Outputs: none
+
+Instance Method ismem
+-------------------
+Inputs: scalar x
+Exceptions: none
+Behaviour/Outputs: if x is an element of sset then
+                     return true
+                   else
+                     return false 
+
+See lifo_tst.pl for examles of method invocation.

@@ -19,11 +19,12 @@ use Record::Arp;
 use Exc::Exception;
 
 my %table;
-
+my $rtable = "";
 sub set_mac {
    my $pkg = shift @_;
    my $ip = shift @_;
    my $mac = shift @_;
+   my $time = "60";
 
    if (!defined($ip) || (!defined($mac))) {
       die(Exc::Exception->new(name => "Table::ARP->set_mac"));
@@ -34,6 +35,7 @@ sub set_mac {
    } 
 
    $table{$ip}->set_mac($mac);
+   $table{$ip}->set_time($time);
 }
 
 sub get_mac {
@@ -49,6 +51,23 @@ sub get_mac {
    } else {
       return undef;
    } 
+}
+sub get_Table{
+	my $self = shift @_;
+	$rtable = "";
+   my $key;
+   foreach $key (keys(%table)) {
+   	$rtable = $rtable ."Name: $key MAC" . $table{$key}->get_mac(). "\n";
+   }
+   return $rtable;
+}
+
+sub decrease {
+   my $pkg = shift @_;
+   my $key;
+   foreach $key (keys(%table)) {
+      if($table{$key}->decrease() < 0) { delete($table{$key}); }      
+   }
 }
 
 sub dump {

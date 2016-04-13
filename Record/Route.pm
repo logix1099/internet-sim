@@ -62,8 +62,8 @@ sub set_gateway {
 sub dump {
    my $self = shift @_;
 
-   print ("Interface: $self->{interface} ");
-   print ("Gateway: $self->{gateway} \n");
+ #  print ("Interface: $self->{interface} ");
+  # print ("Gateway: $self->{gateway} \n");
    return;
 }
 

@@ -12,12 +12,15 @@
 SD=../../../Cew
 
 MODULES=Demo/Verification/Lifo \
+        Demo/Verification/SSet \
         Event/Verification/BOOT \
         Event/Verification/IDLE  \
         Event/Verification/NIC \
         Event/Verification/STDIN \
         Handler/Verification/ETHERNET \
         Handler/Verification/ICMP \
+        Handler/Verification/ARPD \
+        Handler/Verification/ARP \
         Handler/Verification/IP \
         Handler/Verification/P2P \
         Handler/Verification/PING \

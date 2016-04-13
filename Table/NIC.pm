@@ -20,7 +20,7 @@ use Exc::Exception;
 use Table::ROUTE;
 
 my %table;
-
+my $rtable;
 sub get_keys {
 
    return keys(%table);
@@ -233,7 +233,14 @@ sub enqueue_packet_fragment {
 
    $table{$nic_name}->enqueue_packet_fragment($f);
 }
-
+sub get_Table{
+	my $self = shift @_;
+   my $key;
+   foreach $key (keys(%table)) {
+   	$rtable = $rtable ."Name: $key \n"
+   }
+   return $rtable;
+} 
 sub dump {
    my $self = shift @_;
 

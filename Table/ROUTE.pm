@@ -19,7 +19,7 @@ use Record::Route;
 use Exc::Exception;
 
 my %table;
-
+my $rtable;
 sub set_route {
    my $pkg = shift @_;
    my $net = shift @_;
@@ -68,7 +68,16 @@ sub get_route {
       return (undef, undef);
    }
 }
-
+sub get_Table{
+	my $self = shift @_;
+	$rtable = "";
+   my $key;
+   foreach $key (keys(%table)) {
+   	
+   	$rtable = $rtable ."Net: $key" . " ". $table{'0.0.0.0'}->get_interface(). " ". $table{'0.0.0.0'}->get_gateway(). "\n";
+   }
+   return $rtable;
+}
 sub dump {
    my $self = shift @_;
 

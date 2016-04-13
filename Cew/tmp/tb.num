@@ -1,0 +1,87 @@
+#================================================================--
+# File Name    : Demo/Verification/SSet/tb.cew
+#
+# Purpose      : unit testing
+#
+# Author       : Peter Walsh, Vancouver Island University
+#
+# System       : Perl (Linux)
+#
+#------------------------------------------------------------------
+# Revision List
+# Version      Author  Date    Changes
+# 1.0          PW      Oct 12  New version
+#================================================================--
+
+$|=1;
+use strict;
+use warnings;
+
+include(cew.pl)
+
+use lib '../../../';
+use Demo::SSet;
+use Exc::Exception;
+use Try::Tiny;
+cew_Variables
+
+# Local Function Load (s, n);
+# adds n values on the list from
+# the sequence 10, 20, 30  ... 
+# note: no exception checking
+
+sub load {
+   my $s = shift @_;
+   my $n = shift @_;
+   
+   for (my $i = 0; $i < $n; $i++) {
+      $s->add(($i + 1) * 10);
+   }
+}
+#############
+# empty list
+#############
+
+my $list0 = Demo::SSet->new(max => 10);
+cew_Ecase(46,$list0->ismem(20), "empty")
+cew_Ecase(47,$list0->delete(10), "empty")
+
+##################
+## half full list
+##################
+
+my $list1 = Demo::SSet->new(max => 10);
+cew_Ncase(54,load($list1, 5), $list1->ismem(50), 1, !=)
+cew_Ecase(55,$list1->add(40), "element")
+cew_Ncase(56,$list1->delete(50), $list1->ismem(50), 0, !=)
+cew_Ncase(57,, $list1->ismem(10), 1, !=)
+cew_Ncase(58,$list1->delete(10), $list1->ismem(10), 0, !=)
+cew_Ncase(59,, $list1->ismem(30), 1, !=)
+cew_Ncase(60,$list1->delete(30), $list1->ismem(30), 0, !=)
+cew_Ecase(61,$list1->delete(38), "nonelement")
+##################
+## full list
+##################
+
+my $list2 = Demo::SSet->new(max => 10);
+cew_Ncase(67,load($list2, 10), $list2->ismem(100), 1, !=)
+cew_Ecase(68,$list2->add(110), "full")
+cew_Ncase(69,, $list2->ismem(110), 0, !=)
+cew_Ncase(70,$list2->delete(40), $list2->ismem(40),0, !=)
+
+#################
+## stress test
+#################
+
+my $list3 = Demo::SSet->new(max => 100);
+
+for (my $i = 0; $i < 100; $i++) {
+   cew_Ncase(79,$list3->add($i), $list3->ismem($i), 1, !=)
+}
+
+for (my $i = 99; $i > 0; $i--) {
+   cew_Ncase(83,, $list3->ismem($i), 1, !=)
+   cew_Ncase(84,$list3->delete($i), $list3->ismem($i), 0, !=)
+}
+   
+cew_Summary

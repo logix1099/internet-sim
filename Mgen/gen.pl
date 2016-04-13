@@ -65,6 +65,7 @@ sub makeMakefile{
 }
 
 #makeMakefile('../Demo/Verification/Lifo');
+#makeMakefile('../Demo/Verification/SSet');
 #
 #makeMakefile('../Event/Verification/BOOT');
 #makeMakefile('../Event/Verification/IDLE');
@@ -79,6 +80,9 @@ sub makeMakefile{
 #makeMakefile('../Handler/Verification/PINGD');
 #makeMakefile('../Handler/Verification/STDIN');
 #makeMakefile('../Handler/Verification/STDOUT');
+#makeMakefile('../Handler/Verification/UDP');
+#makeMakefile('../Handler/Verification/INC');
+#makeMakefile('../Handler/Verification/INCD');
 #
 #makeMakefile('../Record/Verification/Arp');
 #makeMakefile('../Record/Verification/Nic');
